@@ -9,7 +9,7 @@
       <div class="page-banner__content container container--narrow">
         <h1 class="page-banner__title"><?php the_title(); ?></h1>
         <div class="page-banner__intro">
-          <p>DONT FORGET TO REPLACE ME LATER</p>
+          <p><?php the_field('page_banner_subtitle'); ?></p>
         </div>
       </div>  
     </div>
@@ -38,12 +38,18 @@
 
         if ($relatedProfessors->have_posts()) {
           echo '<hr class="section-break">';
-        echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professors</h2>';
-
-        while($relatedProfessors->have_posts()) {
-          $relatedProfessors->the_post(); ?>
-          <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+          echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professors</h2>';
+          echo '<ul class="professor-cards">';
+          while($relatedProfessors->have_posts()) {
+            $relatedProfessors->the_post(); ?>
+            <li class="professor-card__list-item">
+              <a class="professor-card" href="<?php the_permalink(); ?>">
+                <img class="professor-card__image" src="<?php the_post_thumbnail_url(); ?>" alt="">
+                <span class="professor-card__name"><?php the_title(); ?></span>
+              </a>
+            </li>
         <?php }
+        echo "</ul>";
         }
 
         wp_reset_postdata();
